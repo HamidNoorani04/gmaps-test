@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Google Maps Key Test</title>
+</head>
+<body>
+  <h2>Swedavia Google Maps API Key Test</h2>
+  <div id="status">LOADING</div>
+  <div id="map" style="height:400px;width:600px"></div>
+
+  <script>
+    function initMap() {
+      document.getElementById("status").textContent = "MAP_JS_LOADED";
+
+      new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 59.33, lng: 18.06 },
+        zoom: 10
+      });
+
+      const geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode(
+        { address: "Stockholm, Sweden" },
+        function(results, status) {
+          document.getElementById("status").textContent =
+            "GEOCODER_STATUS=" + status +
+            (results && results[0]
+              ? " | ADDRESS=" + results[0].formatted_address
+              : "");
+
+          document.title = "RESULT:" + status;
+        }
+      );
+    }
+  </script>
+
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMRdep8bnX7VOgqVBj3mhdIV4oSlEM8fg&callback=initMap">
+  </script>
+</body>
+</html>
